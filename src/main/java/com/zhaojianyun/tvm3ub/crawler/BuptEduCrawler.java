@@ -1,8 +1,6 @@
 package com.zhaojianyun.tvm3ub.crawler;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,7 +8,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,14 +42,12 @@ public class BuptEduCrawler {
 
         StringBuilder stringBuilder = new StringBuilder("#EXTM3U\n");
         immutablePairs.forEach(pair -> {
-            String title = StringUtils.replace(pair.left, "高清", " HD");
-
-            stringBuilder.append("#EXTINF:-1 ,").append(title).append("\n");
+            stringBuilder.append("#EXTINF:-1 ,").append(pair.left).append("\n");
             stringBuilder.append(pair.right).append("\n");
         });
 
         System.out.println(stringBuilder);
         Path path = Paths.get("release", "国内卫视.m3u");
-        Files.write(path,stringBuilder.toString().getBytes());
+        Files.write(path, stringBuilder.toString().getBytes());
     }
 }
